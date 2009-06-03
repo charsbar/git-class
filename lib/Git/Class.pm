@@ -1,15 +1,8 @@
 package Git::Class;
 
-use strict;
-use warnings;
-use base 'Exporter';
-use Git::Class::Cmd;
+use Any::Moose; extends 'Git::Class::Cmd';
 
 our $VERSION = '0.01';
-
-our @EXPORT_OK = 'git';
-
-sub git { Git::Class::Cmd->new(@_) }
 
 1;
 
@@ -17,7 +10,7 @@ __END__
 
 =head1 NAME
 
-Git::Class - a simple git wrapper
+Git::Class - a simple git wrapper to capture output
 
 =head1 SYNOPSIS
 
@@ -28,18 +21,17 @@ Git::Class - a simple git wrapper
   my $git = Git::Class::Cmd->new;
   my $worktree = $git->clone('git://github.com/charsbar/git-class/master/tree');
   $worktree->add('myfile');
-  $worktree->commit;
+  $worktree->commit({ message => 'a commit message' });
   $worktree->push;
+
+  my $captured = $worktree->status; # as a whole
+  my @captured = $worktree->status; # split by "\n"
 
 =head1 DESCRIPTION
 
-This class is a simple wrapper of a C<git> executable.
+This is a simple wrapper of a C<git> executable. The strength is that you can run a C<git> command and capture the output in a simple and more portable way than using C<open> to pipe (which is not always implemented fully).
 
-=head1 EXPORTABLE FUNCTION
-
-=head2 git
-
-returns a Git::Class::Cmd object.
+As of this writing, most of the git commands simply returns the output, but this will be changed in the near future, especially when called in the list context, where we may want sort of proccessed data like what files are affected etc.
 
 =head1 SEE ALSO
 
