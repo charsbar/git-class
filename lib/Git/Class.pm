@@ -19,7 +19,7 @@ Git::Class - a simple git wrapper to capture output
   use Git::Class;
 
   my $git = Git::Class::Cmd->new;
-  my $worktree = $git->clone('git://github.com/charsbar/git-class/master/tree');
+  my $worktree = $git->clone('git://github.com/charsbar/git-class.git');
   $worktree->add('myfile');
   $worktree->commit({ message => 'a commit message' });
   $worktree->push;

@@ -81,7 +81,7 @@ Git::Class::Cmd
   use Git::Class;
 
   my $git = Git::Class::Cmd->new;
-  my $worktree = $git->clone('git://github.com/charsbar/git-class/master/tree');
+  my $worktree = $git->clone('git://github.com/charsbar/git-class.git');
 
   my $captured = $git->status; # as a whole
   my @captured = $git->status; # split by "\n"
