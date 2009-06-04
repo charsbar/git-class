@@ -16,6 +16,7 @@ WriteMakefile(
     'Test::More'          => '0.47',
     'Test::UseAllModules' => '0.12',
     'URI::Escape'         => 0,
+    (($^O ne 'MSWin32') ? ('String::ShellQuote' => 0) : ()),
   },
   ($ExtUtils::MakeMaker::VERSION >= 6.31
     ? ( LICENSE => 'perl' )

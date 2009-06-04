@@ -55,12 +55,18 @@ sub _quote {
   my $value = shift;
 
   return '' unless defined $value;
-  return $value unless $value =~ /\s/;
+
   my $option_name;
   if ($value =~ s/^(\-\-[\w\-]+=)//) {
     $option_name = $1;
   }
-  $value = ($^O eq 'MSWin32') ? qq{"$value"} : qq{'$value'};
+  if ($^O eq 'MSWin32') {
+    $value = qq{"$value"} if $value =~ /\s/;
+  }
+  else {
+    require String::ShellQuote;
+    $value = String::ShellQuote::shell_quote_best_effort($value);
+  }
   $value = $option_name . $value if $option_name;
 
   return $value;
