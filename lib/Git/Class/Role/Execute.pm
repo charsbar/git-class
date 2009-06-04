@@ -41,6 +41,7 @@ sub _merge_args {
   foreach my $key (sort keys %{ $options }) {
     my $value = $options->{$key};
        $value = '' unless defined $value;
+    $key =~ s/_/\-/g;
     if (length $key == 1) {
       unshift @args, "-$key", ($value ne '' ? $value : ());
     }
