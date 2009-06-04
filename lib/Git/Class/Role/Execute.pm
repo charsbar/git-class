@@ -40,7 +40,8 @@ sub _merge_args {
 
   foreach my $key (sort keys %{ $options }) {
     my $value = $options->{$key};
-    unshift @args, "--$key".(($value ne '') ? "=$value" : '');
+    my $prepend = (length $key == 1) ? '-' : '--';
+    unshift @args, "$prepend$key".(($value ne '') ? "=$value" : '');
   }
   return @args;
 }
