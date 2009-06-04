@@ -61,7 +61,9 @@ sub _quote {
     $option_name = $1;
   }
   if ($^O eq 'MSWin32') {
-    $value = qq{"$value"} if $value =~ /\s/;
+    $value =~ s/\%/^\%/g;
+    $value =~ s/"/"""/g;
+    $value = qq{"$value"};
   }
   else {
     require String::ShellQuote;
