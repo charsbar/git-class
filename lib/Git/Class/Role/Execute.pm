@@ -14,7 +14,7 @@ sub _execute {
 
   unless (defined wantarray) {
     my $rc = system(join ' ', @args);
-    $self->_error($rc);
+    $self->_error($rc) if $rc;
     return;
   }
 
