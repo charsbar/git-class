@@ -38,3 +38,4 @@ t/lib/Git/Class/Test/Role/Error/Basic.pm
 t/lib/Git/Class/Test/Role/Execute.pm
 t/lib/Git/Class/Test/Role/Execute/Execute.pm
 t/lib/Git/Class/Test/Role/Execute/GetOptions.pm
+t/lib/Git/Class/Test/Role/Execute/PrepareOptions.pm
