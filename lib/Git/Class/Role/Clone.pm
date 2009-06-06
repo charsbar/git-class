@@ -9,7 +9,7 @@ use URI::Escape;
 sub clone {
   my $self = shift;
 
-  my ($options, @args) = $self->_parse_args(@_);
+  my ($options, @args) = $self->_get_options(@_);
 
   my ($out) = $self->git( clone => $options, @args );
   Carp::croak $self->_error if $self->_error;

@@ -6,7 +6,7 @@ requires 'git';
 sub fetch {
   my $self = shift;
 
-  # my ($options, @args) = $self->_parse_args(@_);
+  # my ($options, @args) = $self->_get_options(@_);
 
   $self->git( fetch => @_ );
 }

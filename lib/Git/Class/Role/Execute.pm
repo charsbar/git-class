@@ -22,38 +22,37 @@ sub _execute {
   wantarray ? split /\n/, $out : $out;
 }
 
-sub _parse_args {
-  my $self = shift;
+sub _get_options {
+  my ($self, @args) = @_;
 
-  my (%options, @args);
-  foreach my $arg (@_) {
+  my (%options, @left);
+  foreach my $arg (@args) {
     if (ref $arg eq 'HASH') {
       %options = (%options, %{ $arg });
     }
     else {
-      push @args, $arg;
+      push @left, $arg;
     }
   }
-  return (\%options, @args);
+  return (\%options, @left);
 }
 
-sub _merge_args {
-  my $self = shift;
+sub _prepare_options {
+  my ($self, $options) = @_;
 
-  my ($options, @args) = $self->_parse_args(@_);
-
+  my @list;
   foreach my $key (sort keys %{ $options }) {
     my $value = $options->{$key};
        $value = '' unless defined $value;
     $key =~ s/_/\-/g;
     if (length $key == 1) {
-      unshift @args, "-$key", ($value ne '' ? $value : ());
+      unshift @list, "-$key", ($value ne '' ? $value : ());
     }
     else {
-      unshift @args, "--$key".(($value ne '') ? "=$value" : '');
+      unshift @list, "--$key".(($value ne '') ? "=$value" : '');
     }
   }
-  return @args;
+  return @list;
 }
 
 sub _quote {

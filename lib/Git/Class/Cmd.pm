@@ -54,14 +54,26 @@ sub _find_git {
 }
 
 sub git {
-  my ($self, $cmd, @args) = @_;
+  my $self = shift;
 
   unless ($self->is_available) {
     $self->_error("git binary is not available");
     return;
   }
 
-  $self->_execute( $self->_git, $cmd, $self->_merge_args(@args) );
+  my $git_options = (ref $_[0] eq 'HASH') ? shift : {};
+  my $cmd = shift;
+
+  my ($options, @args) = $self->_get_options(@_);
+  my $cmd = shift @args;
+
+  $self->_execute(
+    $self->_git,
+    $self->_prepare_options($git_options),
+    $cmd,
+    $self->_prepare_options($options),
+    @args,
+  );
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -104,11 +116,17 @@ Most of the git commands are implemented as a role. See Git::Class::Role::* for 
 
 takes a git command name (whatever C<git> executable recognizes; it doesn't matter if it's implemented in this package (as a method/role) or not), and options/arguments for that.
 
-Options may be in a hash reference (or hash references if you prefer). You don't need to care about the order and shell-quoting, and you don't need to prepend '--' to the key in this case, but you do need to set its value to a blank string("") if the option doesn't take a value. Of course you can pass option strings merged in the argument list.
+Options may be in a hash reference (or hash references if you prefer). You don't need to care about the order and shell-quoting, and you don't need to prepend '--' to the key in this case, but you do need to set its value to a blank string(C<"">) (or C<undef>) if the option doesn't take a value. Of course you can pass option strings merged in the argument list.
+
+Note that if you want to pass options for C<git> executable (instead of git command options), pass them as a hash reference first, before you pass a command string, and command parameters.
+
+  $cmd->git({ git_dir => '/path/to/repo/' }, 'command', ...);
 
 Returns a captured text in the scalar context, or split lines in the list context. If some error (or warnings?) might occur, you can see it in C<$object->_error>.
 
 Note that if the C<$object->is_verbose>, the captured output is printed as well. This may help if you want to issue interactive commands.
+
+If you want to trace commands, set C<GIT_CLASS_TRACE> environmental variable to true.
 
 =head1 AUTHOR
 
