@@ -1,4 +1,4 @@
-package Git::Class::Test::Role::Execute::ParseArgs;
+package Git::Class::Test::Role::Execute::GetOptions;
 
 use strict;
 use warnings;
@@ -17,7 +17,7 @@ sub initialize {
 sub basic : Tests(4) {
   my $class = shift;
 
-  my ($opts, @args) = $obj->_parse_args(
+  my ($opts, @args) = $obj->_get_options(
     'arg1', { first => 'value1' }, 'arg2', { second => 'value2' },
   );
   ok $opts->{first} eq 'value1', $class->message('got first option');
@@ -29,7 +29,7 @@ sub basic : Tests(4) {
 sub options_with_same_key : Test {
   my $class = shift;
 
-  my ($opts, @args) = $obj->_parse_args(
+  my ($opts, @args) = $obj->_get_options(
     { key => 'value1' }, { key => 'value2' },
   );
   ok $opts->{key} eq 'value2', $class->message('first option is overwritten');
@@ -38,7 +38,7 @@ sub options_with_same_key : Test {
 sub no_options : Tests(2) {
   my $class = shift;
 
-  my ($opts, @args) = $obj->_parse_args('foo');
+  my ($opts, @args) = $obj->_get_options('foo');
   ok ref $opts eq 'HASH' && !%{ $opts }, $class->message('got a blank hash reference');
   ok $args[0] eq 'foo', $class->message('args are not affected');
 }
