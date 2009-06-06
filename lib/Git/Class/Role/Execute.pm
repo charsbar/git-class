@@ -8,6 +8,10 @@ sub _execute {
 
   @args = map { _quote($_) } @args;
 
+  if ($ENV{GIT_CLASS_TRACE}) {
+    print STDERR join ' ', @args, "\n";
+  }
+
   my ($out, $err) = do {
     local *capture = *tee if $self->is_verbose;
     capture { system(@args) };
