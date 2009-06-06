@@ -59,6 +59,7 @@ sub _quote {
   my $value = shift;
 
   return '' unless defined $value;
+  return $$value if ref $value eq 'SCALAR';
 
   my $option_name;
   if ($value =~ s/^(\-\-[\w\-]+=)//) {
