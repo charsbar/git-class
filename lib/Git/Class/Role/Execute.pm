@@ -13,14 +13,14 @@ sub _execute {
   }
 
   unless (defined wantarray) {
-    my $rc = system(@args);
+    my $rc = system(join ' ', @args);
     $self->_error($rc);
     return;
   }
 
   my ($out, $err) = do {
     local *capture = *tee if $self->is_verbose;
-    capture { system(@args) };
+    capture { system(join ' ', @args) };
   };
 
   $self->_error($err) if $err;
