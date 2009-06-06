@@ -12,6 +12,12 @@ sub _execute {
     print STDERR join ' ', @args, "\n";
   }
 
+  unless (defined wantarray) {
+    my $rc = system(@args);
+    $self->_error($rc);
+    return;
+  }
+
   my ($out, $err) = do {
     local *capture = *tee if $self->is_verbose;
     capture { system(@args) };
