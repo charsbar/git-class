@@ -62,7 +62,6 @@ sub git {
   }
 
   my $git_options = (ref $_[0] eq 'HASH') ? shift : {};
-  my $cmd = shift;
 
   my ($options, @args) = $self->_get_options(@_);
   my $cmd = shift @args;
