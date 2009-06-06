@@ -61,15 +61,19 @@ sub git {
     return;
   }
 
-  my $git_options = (ref $_[0] eq 'HASH') ? shift : {};
+  my %git_options;
+  while(ref $_[0] eq 'HASH') {
+    my $href = shift;
+    %git_options = (%git_options, %{$href});
+  }
 
   my ($options, @args) = $self->_get_options(@_);
   my $cmd = shift @args;
 
   $self->_execute(
     $self->_git,
-    $self->_prepare_options($git_options),
-    $cmd,
+    $self->_prepare_options(\%git_options),
+    ($cmd ? ($cmd) : ()),
     $self->_prepare_options($options),
     @args,
   );
