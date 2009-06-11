@@ -11,6 +11,7 @@ WriteMakefile(
     'Any::Moose'          => '0.09',
     'Capture::Tiny'       => 0,
     'File::Spec'          => 0,
+    'Module::Find'        => 0,
     'Mouse'               => '0.23',
     'Test::Classy'        => '0.07',
     'Test::More'          => '0.47',

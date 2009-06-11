@@ -1,30 +1,8 @@
 package Git::Class::Cmd;
 
-use Any::Moose; with qw(
-  Git::Class::Role::Execute
-
-  Git::Class::Role::Add
-  Git::Class::Role::Bisect
-  Git::Class::Role::Branch
-  Git::Class::Role::Checkout
-  Git::Class::Role::Clone
-  Git::Class::Role::Commit
-  Git::Class::Role::Diff
-  Git::Class::Role::Fetch
-  Git::Class::Role::Grep
-  Git::Class::Role::Init
-  Git::Class::Role::Log
-  Git::Class::Role::Merge
-  Git::Class::Role::Move
-  Git::Class::Role::Pull
-  Git::Class::Role::Push
-  Git::Class::Role::Rebase
-  Git::Class::Role::Reset
-  Git::Class::Role::Remove
-  Git::Class::Role::Show
-  Git::Class::Role::Status
-  Git::Class::Role::Tag
-);
+use Any::Moose;
+use Module::Find ();
+with (Module::Find::findsubmod 'Git::Class::Role');
 
 has '_git' => (
   is        => 'rw',
