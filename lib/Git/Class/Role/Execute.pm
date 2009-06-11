@@ -71,10 +71,13 @@ sub _quote {
   if ($value =~ s/^(\-\-[\w\-]+=)//) {
     $option_name = $1;
   }
+  my $org_value = $value;
   if ($^O eq 'MSWin32') {
-    $value =~ s/\%/^\%/g;
-    $value =~ s/"/"""/g;
-    $value = qq{"$value"};
+    if ($org_value =~ /[\s^"<>&|!\(\)=;,]/) {
+      $value =~ s/\%/^\%/g;
+      $value =~ s/"/"""/g;
+      $value = qq{"$value"};
+    }
   }
   else {
     require String::ShellQuote;
