@@ -13,6 +13,7 @@ WriteMakefile(
     'File::Spec'          => 0,
     'Module::Find'        => 0,
     'Mouse'               => '0.23',
+    'Path::Extended'      => '0.12',
     'Test::Classy'        => '0.07',
     'Test::More'          => '0.47',
     'Test::UseAllModules' => '0.12',
