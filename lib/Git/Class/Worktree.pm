@@ -58,7 +58,7 @@ Git::Class::Worktree
 
 =head1 DESCRIPTION
 
-This is another (experimental) interface to C<git> executable for convenience.
+This is another (experimental) interface to C<git> executable for convenience. Note that this will change the current directory to the path you specify when you create an object.
 
 =head1 AUTHOR
 
