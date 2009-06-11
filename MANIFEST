@@ -31,8 +31,10 @@ README
 t/00_load.t
 t/10_role_error.t
 t/10_role_execute.t
+t/20_cmd.t
 t/99_pod.t
 t/99_podcoverage.t
+t/lib/Git/Class/Test/Cmd/Basic.pm
 t/lib/Git/Class/Test/Role/Error.pm
 t/lib/Git/Class/Test/Role/Error/Basic.pm
 t/lib/Git/Class/Test/Role/Execute.pm
