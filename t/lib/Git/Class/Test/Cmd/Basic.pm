@@ -17,6 +17,8 @@ local $ENV{GIT_CLASS_TRACE} = 1;
 sub initialize {
   my $class = shift;
 
+  $class->skip_this_class('git is not available') unless $CMD->is_available;
+
   $GIT_DIR->remove if $GIT_DIR->exists;
   $GIT_DIR->mkdir;
   chdir $GIT_DIR;

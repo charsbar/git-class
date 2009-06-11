@@ -6,11 +6,13 @@ with (Module::Find::findsubmod 'Git::Class::Role');
 
 has '_git' => (
   is        => 'rw',
-  isa       => 'Str',
+  isa       => 'Str|Undef',
   init_arg  => 'exec_path',
   builder   => '_find_git',
-  predicate => 'is_available'
 );
+
+# predicate doesn't work in this case
+sub is_available { shift->_git ? 1 : 0 }
 
 sub _find_git {
   my $self = shift;
@@ -92,6 +94,10 @@ As of this writing, most of the git commands (methods of this class) simply retu
 =head1 METHODS
 
 Most of the git commands are implemented as a role. See Git::Class::Role::* for details.
+
+=head2 is_available
+
+returns true if the C<git> command exists (or specified explicitly).
 
 =head2 git
 
