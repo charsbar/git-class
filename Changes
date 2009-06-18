@@ -1,4 +1,7 @@
 Revision history for Git-Class
 
+0.02 2009/06/19
+  - ::Worktree shouldn't call system chdir (spotted by Mathieu Bivert)  - added some tests for ::Worktree
+
 0.01 2009/06/11
   - initial release
