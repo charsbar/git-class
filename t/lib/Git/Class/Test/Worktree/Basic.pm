@@ -1,4 +1,4 @@
-package Git::Class::Test::Cmd::Basic;
+package Git::Class::Test::Worktree::Basic;
 
 use strict;
 use warnings;
