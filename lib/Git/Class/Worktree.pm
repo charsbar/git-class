@@ -11,7 +11,7 @@ has '_path' => (
   trigger  => sub {
     my ($self, $path) = @_;
     $self->{path} = File::Spec->rel2abs($path);
-    $self->_execute( chdir => $path );
+    chdir $path;
   },
 );
 
