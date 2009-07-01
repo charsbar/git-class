@@ -15,6 +15,8 @@ has '_path' => (
   },
 );
 
+has '_cwd' => ( is => 'ro', isa => 'Str' );
+
 has '_cmd' => (
   is         => 'rw',
   isa        => 'Git::Class::Cmd',
@@ -33,6 +35,22 @@ sub _build__cmd {
     die_on_error => $self->_die_on_error,
     verbose      => $self->is_verbose,
   );
+}
+
+sub BUILDARGS {
+  my $class = shift;
+
+  my $args = $class->next::method(@_);
+
+  $args->{_cwd} = Cwd::cwd();
+
+  $args;
+}
+
+sub DEMOLISH {
+  my $self = shift;
+
+  chdir $self->_cwd;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -58,7 +76,13 @@ Git::Class::Worktree
 
 =head1 DESCRIPTION
 
-This is another (experimental) interface to C<git> executable for convenience. Note that this will change the current directory to the path you specify when you create an object.
+This is another (experimental) interface to C<git> executable for convenience. Note that this will change the current directory to the path you specify when you create an object, and as of 0.03, it'll take you back to the previous current directory when you demolish the object.
+
+=head1 INTERNAL METHODS
+
+=head2 BUILDARGS
+
+=head2 DEMOLISH
 
 =head1 AUTHOR
 
