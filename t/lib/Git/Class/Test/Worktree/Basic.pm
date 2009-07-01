@@ -4,11 +4,12 @@ use strict;
 use warnings;
 use Test::Classy::Base;
 use Git::Class::Cmd;
+use Git::Class::Worktree;
 use Path::Extended;
 use Cwd;
 
 my $CMD = Git::Class::Cmd->new(verbose => 1);
-
+my $TREE;
 my $CWD = Cwd::cwd;
 my $GIT_DIR = dir('t/git/test');
 
@@ -21,37 +22,58 @@ sub initialize {
 
   $GIT_DIR->remove if $GIT_DIR->exists;
   $GIT_DIR->mkdir;
-  chdir $GIT_DIR;
 }
 
-sub test00_init : Tests(2) {
+sub test00_chdir : Tests(3) {
   my $class = shift;
 
-  my $got = $CMD->git('init');
+  ok dir($CWD) eq dir(Cwd::cwd()), $class->message('we are in the current directory');
 
-  ok $got, $class->message("initialized local repository");
-  ok !$CMD->_error, $class->message('and no error');
+  $TREE = Git::Class::Worktree->new( path => $GIT_DIR->absolute ); 
+
+  ok dir(Cwd::cwd()) eq dir($TREE->_path), $class->message('current directory has changed properly');
+
+  ok dir($CWD) eq dir($TREE->_cwd), $class->message('previous current directory is stored');
 }
 
-sub test01_add : Tests(2) {
+sub test01_init : Tests(2) {
+  my $class = shift;
+
+  my $got = $TREE->init;
+
+  ok $got, $class->message("initialized local repository");
+  ok !$TREE->_error, $class->message('and no error');
+}
+
+sub test02_add : Tests(2) {
   my $class = shift;
 
   my $file = $GIT_DIR->file('README');
   $file->save('readme');
   ok $file->exists, $class->message("created README file");
 
-  my $got = $CMD->git('add', 'README');
+  my $got = $TREE->add('README');
 
-  ok !$CMD->_error, $class->message('added README to the local repository without errors');
+  ok !$TREE->_error, $class->message('added README to the local repository without errors');
 }
 
 sub test02_commit : Tests(2) {
   my $class = shift;
 
-  my $got = $CMD->git('commit', { message => 'committed README' });
+  my $got = $TREE->commit({ message => 'committed README' });
 
   ok $got, $class->message("committed to the local repository");
-  ok !$CMD->_error, $class->message('and no error');
+  ok !$TREE->_error, $class->message('and no error');
+}
+
+sub test99_demolish : Tests(2) {
+  my $class = shift;
+
+  ok dir($CWD) ne dir(Cwd::cwd()), $class->message('current directory is not the same as the stored directory');
+
+  undef $TREE; # to demolish
+
+  ok dir($CWD) eq dir(Cwd::cwd()), $class->message('restored previous current directory after demolishing');;
 }
 
 sub finalize {
