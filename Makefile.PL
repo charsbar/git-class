@@ -14,6 +14,7 @@ my %params = (
     'File::Spec'          => 0,
     'Module::Find'        => 0,
     'Mouse'               => '0.23',
+    'MRO::Compat'         => 0,
     'Path::Extended'      => '0.12',
     'URI::Escape'         => 0,
     (($^O ne 'MSWin32') ? ('String::ShellQuote' => 0) : ()),

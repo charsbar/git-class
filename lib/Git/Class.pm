@@ -2,7 +2,7 @@ package Git::Class;
 
 use Any::Moose; extends 'Git::Class::Cmd';
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 1;
 

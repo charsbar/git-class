@@ -1,8 +1,8 @@
 package Git::Class::Cmd;
 
-use Any::Moose;
 use Module::Find ();
-with (Module::Find::findsubmod 'Git::Class::Role');
+use Any::Moose; with (Module::Find::findsubmod 'Git::Class::Role');
+use MRO::Compat;
 
 has '_git' => (
   is        => 'rw',

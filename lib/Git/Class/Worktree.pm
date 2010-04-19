@@ -1,6 +1,7 @@
 package Git::Class::Worktree;
 
 use Any::Moose; with 'Git::Class::Role::Execute';
+use MRO::Compat;
 use File::Spec;
 
 has '_path' => (
