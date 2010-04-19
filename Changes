@@ -1,5 +1,8 @@
 Revision history for Git-Class
 
+0.05 2010/04/19
+  - use MRO::Compat explicitly
+
 0.04 2010/02/20
   - fixed pod nits spotted by FWIE
 
