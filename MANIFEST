@@ -7,6 +7,7 @@ lib/Git/Class/Role/Branch.pm
 lib/Git/Class/Role/Checkout.pm
 lib/Git/Class/Role/Clone.pm
 lib/Git/Class/Role/Commit.pm
+lib/Git/Class/Role/Cwd.pm
 lib/Git/Class/Role/Diff.pm
 lib/Git/Class/Role/Error.pm
 lib/Git/Class/Role/Execute.pm

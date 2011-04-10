@@ -1,6 +1,9 @@
 package Git::Class::Worktree;
 
-use Any::Moose; with 'Git::Class::Role::Execute';
+use Any::Moose; with qw/
+  Git::Class::Role::Execute
+  Git::Class::Role::Cwd
+/;
 use MRO::Compat;
 use File::Spec;
 
@@ -15,8 +18,6 @@ has '_path' => (
     chdir $path;
   },
 );
-
-has '_cwd' => ( is => 'ro', isa => 'Str' );
 
 has '_cmd' => (
   is         => 'rw',
@@ -35,23 +36,14 @@ sub _build__cmd {
   return Git::Class::Cmd->new(
     die_on_error => $self->_die_on_error,
     verbose      => $self->is_verbose,
+    cwd          => $self->_path,
   );
-}
-
-sub BUILDARGS {
-  my $class = shift;
-
-  my $args = $class->next::method(@_);
-
-  $args->{_cwd} = Cwd::cwd();
-
-  $args;
 }
 
 sub DEMOLISH {
   my $self = shift;
 
-  chdir $self->_cwd;
+  chdir $self->_cwd if $self->_cwd;
 }
 
 __PACKAGE__->meta->make_immutable;

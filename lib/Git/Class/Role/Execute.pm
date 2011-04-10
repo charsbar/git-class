@@ -1,7 +1,12 @@
 package Git::Class::Role::Execute;
 
-use Any::Moose '::Role'; with 'Git::Class::Role::Error';
+use Any::Moose '::Role'; with qw/
+  Git::Class::Role::Error
+  Git::Class::Role::Cwd
+/;
 use Capture::Tiny qw(capture tee);
+use Scope::Guard ();
+use Cwd ();
 
 sub _execute {
   my ($self, @args) = @_;
@@ -13,6 +18,9 @@ sub _execute {
   }
 
   unless (defined wantarray) {
+    my $cwd = Cwd::cwd();
+    my $guard = Scope::Guard::guard { chdir $cwd };
+    chdir $self->_cwd if $self->_cwd;
     my $rc = system(join ' ', @args);
     $self->_error($rc) if $rc;
     return;
@@ -20,7 +28,11 @@ sub _execute {
 
   my ($out, $err) = do {
     local *capture = *tee if $self->is_verbose;
-    capture { system(join ' ', @args) };
+    capture {
+      my $cwd = Cwd::cwd();
+      my $guard = Scope::Guard::guard { chdir $cwd };
+      chdir $self->_cwd if $self->_cwd;
+      system(join ' ', @args) };
   };
 
   $self->_error($err) if $err;
