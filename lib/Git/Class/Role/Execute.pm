@@ -17,15 +17,6 @@ sub _execute {
     print STDERR join ' ', @args, "\n";
   }
 
-  unless (defined wantarray) {
-    my $cwd = Cwd::cwd();
-    my $guard = Scope::Guard::guard { chdir $cwd };
-    chdir $self->_cwd if $self->_cwd;
-    my $rc = system(join ' ', @args);
-    $self->_error($rc) if $rc;
-    return;
-  }
-
   my ($out, $err) = do {
     local *capture = *tee if $self->is_verbose;
     capture {
