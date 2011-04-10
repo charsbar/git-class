@@ -1,5 +1,9 @@
 Revision history for Git-Class
 
+0.06 2011/04/10
+  - make sure that commands run under the speicified worktree
+    directory
+
 0.05 2010/04/19
   - use MRO::Compat explicitly
 
