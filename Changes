@@ -1,5 +1,8 @@
 Revision history for Git-Class
 
+0.07 2011/04/10
+  - forgot to add Scope::Guard dependency
+
 0.06 2011/04/10
   - make sure that commands run under the speicified worktree
     directory
