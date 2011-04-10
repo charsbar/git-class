@@ -16,6 +16,7 @@ my %params = (
     'Mouse'               => '0.23',
     'MRO::Compat'         => 0,
     'Path::Extended'      => '0.12',
+    'Scope::Guard'        => 0,
     'URI::Escape'         => 0,
     (($^O ne 'MSWin32') ? ('String::ShellQuote' => 0) : ()),
   },
