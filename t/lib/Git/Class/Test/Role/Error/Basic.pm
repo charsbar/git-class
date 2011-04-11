@@ -5,6 +5,7 @@ use warnings;
 use Test::Classy::Base;
 use Git::Class::Test::Role::Error;
 use Capture::Tiny 'capture';
+use Try::Tiny;
 
 sub basic : Tests(5) {
   my $class = shift;
@@ -22,30 +23,36 @@ sub basic : Tests(5) {
 sub die_on_error : Tests(4) {
   my $class = shift;
 
-  my $obj = eval {
+  my $e;
+  my $obj = try {
     Git::Class::Test::Role::Error->new(die_on_error => 1);
-  };
-  ok !$@, $class->message('object is successfully created');
-  return $class->abort_this_test('object is not created') if $@;
+  } catch { $e = shift };
+  ok !$e, $class->message('object is successfully created');
+  return $class->abort_this_test('object is not created') if $e;
 
   ok $obj->_die_on_error, $class->message('init_arg should work');
 
-  eval { $obj->_error('set error') };
-  ok $@ && $@ =~ /^set error/, $class->message('error message is correct');
+  undef $e;
+  try { $obj->_error('set error') } catch { $e = shift };
+  ok $e && $e =~ /^set error/, $class->message('error message is correct');
 
   $obj->_die_on_error(0);
-  my ($out, $err) = capture { eval { $obj->_error('set error') } };
-  ok !$@ && $err =~ /^set error/, $class->message('should not die');
+  undef $e;
+  my ($out, $err) = capture {
+    try { $obj->_error('set error') } catch { $e = shift };
+  };
+  ok !$e && $err =~ /^set error/, $class->message('should not die');
 }
 
 sub verbose : Tests(3) {
   my $class = shift;
 
-  my $obj = eval {
+  my $e;
+  my $obj = try {
     Git::Class::Test::Role::Error->new(verbose => 1);
-  };
-  ok !$@, $class->message('object is successfully created');
-  return $class->abort_this_test('object is not created') if $@;
+  } catch { $e = shift };
+  ok !$e, $class->message('object is successfully created');
+  return $class->abort_this_test('object is not created') if $e;
   ok $obj->is_verbose, $class->message('init_arg should work');
 
   $obj->is_verbose(0);
