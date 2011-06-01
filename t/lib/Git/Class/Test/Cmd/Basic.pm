@@ -5,23 +5,25 @@ use warnings;
 use Test::Classy::Base;
 use Git::Class::Cmd;
 use Path::Extended;
+use File::Temp qw/tempdir/;
 use Cwd;
 
-my $CMD = Git::Class::Cmd->new(verbose => 1);
-
+my $CMD;
 my $CWD = Cwd::cwd;
-my $GIT_DIR = dir('t/git/test');
+my $GIT_DIR = dir(tempdir(CLEANUP => 1));
 
 local $ENV{GIT_CLASS_TRACE} = 1;
 
 sub initialize {
   my $class = shift;
 
-  $class->skip_this_class('git is not available') unless $CMD->is_available;
-
   $GIT_DIR->remove if $GIT_DIR->exists;
   $GIT_DIR->mkdir;
   chdir $GIT_DIR;
+
+  $CMD = Git::Class::Cmd->new(verbose => 1);
+
+  $class->skip_this_class('git is not available') unless $CMD->is_available;
 }
 
 sub test00_init : Tests(2) {
