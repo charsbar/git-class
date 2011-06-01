@@ -16,8 +16,9 @@ around _error => sub {
 
   # ignore normal (non-error) messages
   # (these will be shown anyway under the verbose mode)
-  return if $err =~ /^To\s\S+\n\s+\w{7}\.\.\w{7}/
-         or $err =~ /^Everything up\-to\-date/;
+  return if $err &&
+           ($err =~ /^To\s\S+\n\s+\w{7}\.\.\w{7}/
+         or $err =~ /^Everything up\-to\-date/);
 
   $self->$org($err);
 };
