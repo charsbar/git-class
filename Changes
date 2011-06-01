@@ -1,5 +1,11 @@
 Revision history for Git-Class
 
+0.09 to be released
+  - use Carp::Clan to give a better message source
+  - added git method to Worktree
+  - added a work around not to treat the known messages to stderr
+    by "git push" as errors
+
 0.08 2011/04/11
   - added ::Role::Config to support $git->config
   - now commands always return the output even in the void context
