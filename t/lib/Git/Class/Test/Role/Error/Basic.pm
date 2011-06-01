@@ -34,14 +34,14 @@ sub die_on_error : Tests(4) {
 
   undef $e;
   try { $obj->_error('set error') } catch { $e = shift };
-  ok $e && $e =~ /^set error/, $class->message('error message is correct');
+  ok $e && $e =~ /set error/, $class->message('error message is correct');
 
   $obj->_die_on_error(0);
   undef $e;
   my ($out, $err) = capture {
     try { $obj->_error('set error') } catch { $e = shift };
   };
-  ok !$e && $err =~ /^set error/, $class->message('should not die');
+  ok !$e && $err =~ /set error/, $class->message('should not die');
 }
 
 sub verbose : Tests(3) {
