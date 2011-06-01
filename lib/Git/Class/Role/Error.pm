@@ -17,11 +17,11 @@ has 'is_verbose' => (
 
 has '_error' => (
   is      => 'rw',
-  isa     => 'Str',
+  isa     => 'Str|Undef',
 #  reader  => '_last_error',  # Mouse doesn't support reader yet
   trigger => sub {
     my ($self, $message) = @_;
-    if ($message ne '') {
+    if (defined $message && $message ne '') {
       chomp $message;
       $self->_die_on_error
         ? croak $message
