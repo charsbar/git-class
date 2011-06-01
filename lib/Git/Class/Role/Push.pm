@@ -11,6 +11,17 @@ sub push {
   $self->git( push => @_ );
 }
 
+around _error => sub {
+  my ($org, $self, $err) = @_;
+
+  # ignore normal (non-error) messages
+  # (these will be shown anyway under the verbose mode)
+  return if $err =~ /^To\s\S+\n\s+\w{7}\.\.\w{7}/
+         or $err =~ /^Everything up\-to\-date/;
+
+  $self->$org($err);
+};
+
 1;
 
 __END__
