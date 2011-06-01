@@ -25,6 +25,7 @@ has '_cmd' => (
   init_arg   => 'cmd',
   builder    => '_build__cmd',
   handles    => [qw(
+    git
     add branch checkout commit config diff fetch init log move 
     push pull rebase reset remove show status tag
   )],
@@ -66,6 +67,8 @@ Git::Class::Worktree
   $work->init;
   $work->add('.');
   $work->commit;
+
+  $work->git('ls-files'); # can run an arbitrary command
 
 =head1 DESCRIPTION
 
