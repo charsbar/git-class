@@ -11,6 +11,7 @@ my %params = (
   PREREQ_PM => {
     'Any::Moose'          => '0.09',
     'Capture::Tiny'       => 0,
+    'Carp::Clan'          => 0,
     'File::Spec'          => 0,
     'Module::Find'        => 0,
     'Mouse'               => '0.23',

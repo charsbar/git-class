@@ -1,7 +1,7 @@
 package Git::Class::Role::Error;
 
 use Any::Moose '::Role';
-use Carp ();
+use Carp::Clan qw/^(Git::Class|Mouse|Moose)::/;
 
 has '_die_on_error' => (
   is       => 'rw',
@@ -24,8 +24,8 @@ has '_error' => (
     if ($message ne '') {
       chomp $message;
       $self->_die_on_error
-        ? Carp::croak $message
-        : Carp::carp  $message;
+        ? croak $message
+        : carp  $message;
     }
   },
 );
