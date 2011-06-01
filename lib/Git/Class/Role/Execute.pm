@@ -23,7 +23,8 @@ sub _execute {
       my $cwd = Cwd::cwd();
       my $guard = Scope::Guard::guard { chdir $cwd };
       chdir $self->_cwd if $self->_cwd;
-      system(join ' ', @args) };
+      system(@args)
+    };
   };
 
   $self->_error($err) if $err;
