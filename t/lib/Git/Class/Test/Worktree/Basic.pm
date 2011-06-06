@@ -27,29 +27,37 @@ sub initialize {
   $class->skip_this_class('git is not available') unless $CMD->is_available;
 }
 
-sub test00_chdir : Tests(3) {
+sub test00_chdir : Tests(4) {
   my $class = shift;
 
   ok dir($CWD) eq dir(Cwd::cwd()), $class->message('we are in the current directory');
 
   $TREE = Git::Class::Worktree->new( path => $GIT_DIR->absolute ); 
 
-  ok dir(Cwd::cwd()) eq dir($TREE->_path), $class->message('current directory has changed properly');
+  ok dir(Cwd::cwd()) ne dir($CWD), $class->message('current directory has changed properly');
+
+  ok dir(Cwd::cwd()) eq dir($TREE->_path), $class->message('current directory is stored properly');
 
   ok dir($CWD) eq dir($TREE->_cwd), $class->message('previous current directory is stored');
 }
 
-sub test01_init : Tests(2) {
+sub test01_init : Tests(4) {
   my $class = shift;
+
+  ok dir(Cwd::cwd()) eq $GIT_DIR, $class->message("current directory is correct");
 
   my $got = $TREE->init;
 
   ok $got, $class->message("initialized local repository");
   ok !$TREE->_error, $class->message('and no error');
+
+  ok $GIT_DIR->subdir('.git')->exists, $class->message('.git exists');
 }
 
 sub test02_add : Tests(2) {
   my $class = shift;
+
+  $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
 
   my $file = $GIT_DIR->file('README');
   $file->save('readme');
@@ -62,6 +70,8 @@ sub test02_add : Tests(2) {
 
 sub test02_commit : Tests(2) {
   my $class = shift;
+
+  $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
 
   my $got = $TREE->commit({ message => 'committed README' });
 

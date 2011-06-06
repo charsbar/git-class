@@ -26,17 +26,23 @@ sub initialize {
   $class->skip_this_class('git is not available') unless $CMD->is_available;
 }
 
-sub test00_init : Tests(2) {
+sub test00_init : Tests(4) {
   my $class = shift;
+
+  ok dir(Cwd::cwd()) eq $GIT_DIR, $class->message("current directory is correct");
 
   my $got = $CMD->git('init');
 
   ok $got, $class->message("initialized local repository");
   ok !$CMD->_error, $class->message('and no error');
+
+  ok $GIT_DIR->subdir('.git')->exists, $class->message('.git exists');
 }
 
 sub test01_add : Tests(2) {
   my $class = shift;
+
+  $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
 
   my $file = $GIT_DIR->file('README');
   $file->save('readme');
@@ -49,6 +55,8 @@ sub test01_add : Tests(2) {
 
 sub test02_commit : Tests(2) {
   my $class = shift;
+
+  $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
 
   my $got = $CMD->git('commit', { message => 'committed README' });
 
