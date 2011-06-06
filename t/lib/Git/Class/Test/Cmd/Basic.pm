@@ -58,7 +58,7 @@ sub test02_commit : Tests(2) {
 
   $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
 
-  my $got = $CMD->git('commit', { message => 'committed README' });
+  my $got = $CMD->git('commit', { message => 'committed README', author => 'A U Thor <author@example.com>' });
 
   ok $got, $class->message("committed to the local repository");
   ok !$CMD->_error, $class->message('and no error');
