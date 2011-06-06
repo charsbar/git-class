@@ -1,5 +1,9 @@
 Revision history for Git-Class
 
+0.10_01 2011/06/06
+  - provide author info for test commits
+  - added canary tests
+
 0.09 2011/06/02
   - use Carp::Clan to give a better message source
   - added git method to Worktree
