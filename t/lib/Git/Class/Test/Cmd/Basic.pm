@@ -10,7 +10,7 @@ use Cwd;
 
 my $CMD;
 my $CWD = Cwd::cwd;
-my $GIT_DIR = dir(tempdir(CLEANUP => 1));
+my $GIT_DIR = dir(tempdir(CLEANUP => 1))->resolve;
 
 local $ENV{GIT_CLASS_TRACE} = 1;
 
@@ -29,7 +29,7 @@ sub initialize {
 sub test00_init : Tests(4) {
   my $class = shift;
 
-  ok dir(Cwd::cwd()) eq $GIT_DIR, $class->message("current directory is correct");
+  is dir(Cwd::cwd()) => $GIT_DIR, $class->message("current directory is correct");
 
   my $got = $CMD->git('init');
 

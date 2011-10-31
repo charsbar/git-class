@@ -12,7 +12,7 @@ use Cwd;
 my $TREE;
 my $CMD;
 my $CWD = Cwd::cwd;
-my $GIT_DIR = dir(tempdir(CLEANUP => 1));
+my $GIT_DIR = dir(tempdir(CLEANUP => 1))->resolve;
 
 local $ENV{GIT_CLASS_TRACE} = 1;
 
@@ -30,7 +30,7 @@ sub initialize {
 sub test00_chdir : Tests(4) {
   my $class = shift;
 
-  ok dir($CWD) eq dir(Cwd::cwd()), $class->message('we are in the current directory');
+  is dir($CWD) => dir(Cwd::cwd()), $class->message('we are in the current directory');
 
   $TREE = Git::Class::Worktree->new( path => $GIT_DIR->absolute ); 
 
