@@ -77,6 +77,12 @@ Git::Class::Worktree
 
 This is another (experimental) interface to C<git> executable for convenience. Note that this will change the current directory to the path you specify when you create an object, and as of 0.03, it'll take you back to the previous current directory when you demolish the object.
 
+=head1 METHODS
+
+=head2 no_capture
+
+is an accessor/mutator to determine if we should use Capture::Tiny to capture the output of git commands. If your web apps hang because of the capturing, set this to true to disable it.
+
 =head1 INTERNAL METHODS
 
 =head2 BUILDARGS

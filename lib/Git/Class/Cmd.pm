@@ -117,6 +117,10 @@ Note that if the C<< $object->is_verbose >>, the captured output is printed as w
 
 If you want to trace commands, set C<GIT_CLASS_TRACE> environmental variable to true.
 
+=head2 no_capture
+
+is an accessor/mutator to determine if we should use Capture::Tiny to capture the output of git commands. If your web apps hang because of the capturing, set this to true to disable it.
+
 =head1 AUTHOR
 
 Kenichi Ishigaki, E<lt>ishigaki@cpan.orgE<gt>
