@@ -1,5 +1,9 @@
 Revision history for Git-Class
 
+0.12 2012/02/19
+  - added no_capture to disable capturing, and disabled capturing
+    when wantarray is not defined.
+
 0.11 2011/11/01
   - explicitly resolve test dir as /tmp may be a symlink
 
