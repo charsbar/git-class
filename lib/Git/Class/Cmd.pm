@@ -4,6 +4,8 @@ use Module::Find ();
 use Any::Moose; with (Module::Find::findsubmod 'Git::Class::Role');
 use MRO::Compat;
 
+has no_capture => (is => 'rw');
+
 has '_git' => (
   is        => 'rw',
   isa       => 'Str|Undef',

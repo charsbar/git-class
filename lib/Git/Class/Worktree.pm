@@ -7,6 +7,8 @@ use Any::Moose; with qw/
 use MRO::Compat;
 use File::Spec;
 
+has no_capture => (is => 'rw');
+
 has '_path' => (
   is       => 'rw',
   isa      => 'Str',
@@ -38,6 +40,7 @@ sub _build__cmd {
     die_on_error => $self->_die_on_error,
     verbose      => $self->is_verbose,
     cwd          => $self->_path,
+    no_capture   => $self->no_capture,
   );
 }
 

@@ -18,13 +18,23 @@ sub _execute {
   }
 
   my ($out, $err) = do {
-    local *capture = *tee if $self->is_verbose;
-    capture {
+    # Capture::Tiny may confuse your web apps, so use it sparingly.
+    if (!defined wantarray or $self->no_capture) {
       my $cwd = Cwd::cwd();
       my $guard = Scope::Guard::guard { chdir $cwd };
       chdir $self->_cwd if $self->_cwd;
-      system(@args)
-    };
+      system(@args);
+      return ('', $?);
+    }
+    else {
+      local *capture = *tee if $self->is_verbose;
+      capture {
+        my $cwd = Cwd::cwd();
+        my $guard = Scope::Guard::guard { chdir $cwd };
+        chdir $self->_cwd if $self->_cwd;
+        system(@args);
+      };
+    }
   };
 
   $self->_error($err) if $err;
