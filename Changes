@@ -1,5 +1,9 @@
 Revision history for Git-Class
 
+0.13 2012/11/29
+  - no new features
+  - set user.name/email locally to avoid fatal errors under smoking environments
+
 0.12 2012/02/19
   - added no_capture to disable capturing, and disabled capturing
     when wantarray is not defined.
