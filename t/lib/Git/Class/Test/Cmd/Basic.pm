@@ -54,7 +54,7 @@ sub test01_config : Tests(4) {
 
   my $config = $GIT_DIR->file('.git/config')->slurp;
   like $config => qr/email\s*=\s*test\@localhost/, $class->message("contains user.email");;
-  like $config => qr/name\s*=\s*foo bar/, $class->message("contains user.name");;
+  like $config => qr/name\s*=\s*(['"]?)foo bar\1/, $class->message("contains user.name");;
 }
 
 sub test02_add : Tests(2) {
