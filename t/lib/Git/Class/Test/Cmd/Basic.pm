@@ -39,7 +39,25 @@ sub test00_init : Tests(4) {
   ok $GIT_DIR->subdir('.git')->exists, $class->message('.git exists');
 }
 
-sub test01_add : Tests(2) {
+sub test01_config : Tests(4) {
+  my $class = shift;
+
+  $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
+
+  my $got = $CMD->config('user.email' => 'test@localhost');
+
+  ok !$CMD->_error, $class->message('set local user.email without errors');
+
+  $got = $CMD->config('user.name' => 'foo bar');
+
+  ok !$CMD->_error, $class->message('set local user.name without errors');
+
+  my $config = $GIT_DIR->file('.git/config')->slurp;
+  like $config => qr/email\s*=\s*test\@localhost/, $class->message("contains user.email");;
+  like $config => qr/name\s*=\s*foo bar/, $class->message("contains user.name");;
+}
+
+sub test02_add : Tests(2) {
   my $class = shift;
 
   $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
@@ -53,7 +71,7 @@ sub test01_add : Tests(2) {
   ok !$CMD->_error, $class->message('added README to the local repository without errors');
 }
 
-sub test02_commit : Tests(2) {
+sub test03_commit : Tests(2) {
   my $class = shift;
 
   $class->skip_this_test('not in a local repository') unless $GIT_DIR->subdir('.git')->exists;
