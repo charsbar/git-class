@@ -6,7 +6,7 @@ use Moo::Role; with qw/
 /;
 use Capture::Tiny qw(capture tee);
 use Scope::Guard ();
-use Cwd ();
+use Path::Tiny ();
 
 sub _execute {
   my ($self, @args) = @_;
@@ -20,7 +20,7 @@ sub _execute {
   my ($out, $err) = do {
     # Capture::Tiny may confuse your web apps, so use it sparingly.
     if (!defined wantarray or $self->no_capture) {
-      my $cwd = Cwd::cwd();
+      my $cwd = Path::Tiny->cwd;
       my $guard = Scope::Guard::guard { chdir $cwd };
       chdir $self->_cwd if $self->_cwd;
       system(@args);
@@ -29,7 +29,7 @@ sub _execute {
     else {
       local *capture = *tee if $self->is_verbose;
       capture {
-        my $cwd = Cwd::cwd();
+        my $cwd = Path::Tiny->cwd();
         my $guard = Scope::Guard::guard { chdir $cwd };
         chdir $self->_cwd if $self->_cwd;
         system(@args);

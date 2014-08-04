@@ -1,13 +1,13 @@
 package Git::Class::Role::Cwd;
 
 use Moo::Role;
-use Cwd ();
+use Path::Tiny ();
 
 has '_cwd' => (
   is       => 'ro',
 #  isa      => 'Str|Undef',
   init_arg => 'cwd',
-  default  => sub { Cwd::cwd() },
+  default  => sub { Path::Tiny->cwd },
 );
 
 1;

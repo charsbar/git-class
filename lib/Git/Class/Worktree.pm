@@ -5,7 +5,7 @@ use Moo; with qw/
   Git::Class::Role::Cwd
 /;
 use MRO::Compat;
-use File::Spec;
+use Path::Tiny;
 
 has no_capture => (is => 'rw');
 
@@ -16,7 +16,7 @@ has '_path' => (
   required => 1,
   trigger  => sub {
     my ($self, $path) = @_;
-    $self->{path} = File::Spec->rel2abs($path);
+    $self->{path} = path($path);
     chdir $path;
   },
 );
