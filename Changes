@@ -1,5 +1,9 @@
 Revision history for Git-Class
 
+0.14 2014/08/04
+  - no new features
+  - modernized with Moo and Path::Tiny; dropped a few dependencies
+
 0.13 2012/11/29
   - no new features
   - set user.name/email locally to avoid fatal errors under smoking environments
