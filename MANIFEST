@@ -1,4 +1,5 @@
 Changes
+cpanfile
 lib/Git/Class.pm
 lib/Git/Class/Cmd.pm
 lib/Git/Class/Role/Add.pm
@@ -37,11 +38,3 @@ t/20_cmd.t
 t/30_worktree.t
 t/99_pod.t
 t/99_podcoverage.t
-t/lib/Git/Class/Test/Cmd/Basic.pm
-t/lib/Git/Class/Test/Role/Error.pm
-t/lib/Git/Class/Test/Role/Error/Basic.pm
-t/lib/Git/Class/Test/Role/Execute.pm
-t/lib/Git/Class/Test/Role/Execute/Execute.pm
-t/lib/Git/Class/Test/Role/Execute/GetOptions.pm
-t/lib/Git/Class/Test/Role/Execute/PrepareOptions.pm
-t/lib/Git/Class/Test/Worktree/Basic.pm

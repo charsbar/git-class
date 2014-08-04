@@ -14,7 +14,6 @@ if ($^O ne 'MSWin32') {
 }
 
 on testing => sub {
-  requires 'Test::Classy'        => '0.07';
-  requires 'Test::More'          => '0.47';
+  requires 'Test::More'          => '0.98'; # for sane subtest
   requires 'Test::UseAllModules' => '0.12';
 };
