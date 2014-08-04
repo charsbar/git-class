@@ -1,11 +1,11 @@
 package Git::Class::Role::Cwd;
 
-use Any::Moose '::Role';
+use Moo::Role;
 use Cwd ();
 
 has '_cwd' => (
   is       => 'ro',
-  isa      => 'Str|Undef',
+#  isa      => 'Str|Undef',
   init_arg => 'cwd',
   default  => sub { Cwd::cwd() },
 );

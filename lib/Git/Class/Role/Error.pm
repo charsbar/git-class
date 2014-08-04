@@ -1,23 +1,23 @@
 package Git::Class::Role::Error;
 
-use Any::Moose '::Role';
+use Moo::Role;
 use Carp::Clan qw/^(Git::Class|Mouse|Moose)::/;
 
 has '_die_on_error' => (
   is       => 'rw',
-  isa      => 'Bool',
+#  isa      => 'Bool',
   init_arg => 'die_on_error'
 );
 
 has 'is_verbose' => (
   is       => 'rw',
-  isa      => 'Bool',
+#  isa      => 'Bool',
   init_arg => 'verbose',
 );
 
 has '_error' => (
   is      => 'rw',
-  isa     => 'Str|Undef',
+#  isa     => 'Str|Undef',
 #  reader  => '_last_error',  # Mouse doesn't support reader yet
   trigger => sub {
     my ($self, $message) = @_;

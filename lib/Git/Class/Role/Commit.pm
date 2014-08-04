@@ -1,6 +1,6 @@
 package Git::Class::Role::Commit;
 
-use Any::Moose '::Role'; with 'Git::Class::Role::Execute';
+use Moo::Role; with 'Git::Class::Role::Execute';
 requires 'git';
 
 sub commit {

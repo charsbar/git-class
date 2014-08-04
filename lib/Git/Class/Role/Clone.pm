@@ -1,6 +1,6 @@
 package Git::Class::Role::Clone;
 
-use Any::Moose '::Role'; with 'Git::Class::Role::Execute';
+use Moo::Role; with 'Git::Class::Role::Execute';
 requires 'git';
 
 use Git::Class::Worktree;

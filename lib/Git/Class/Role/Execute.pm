@@ -1,6 +1,6 @@
 package Git::Class::Role::Execute;
 
-use Any::Moose '::Role'; with qw/
+use Moo::Role; with qw/
   Git::Class::Role::Error
   Git::Class::Role::Cwd
 /;

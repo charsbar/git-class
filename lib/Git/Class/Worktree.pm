@@ -1,6 +1,6 @@
 package Git::Class::Worktree;
 
-use Any::Moose; with qw/
+use Moo; with qw/
   Git::Class::Role::Execute
   Git::Class::Role::Cwd
 /;
@@ -11,7 +11,7 @@ has no_capture => (is => 'rw');
 
 has '_path' => (
   is       => 'rw',
-  isa      => 'Str',
+#  isa      => 'Str',
   init_arg => 'path',
   required => 1,
   trigger  => sub {
@@ -23,7 +23,7 @@ has '_path' => (
 
 has '_cmd' => (
   is         => 'rw',
-  isa        => 'Git::Class::Cmd',
+#  isa        => 'Git::Class::Cmd',
   init_arg   => 'cmd',
   builder    => '_build__cmd',
   handles    => [qw(
@@ -49,8 +49,6 @@ sub DEMOLISH {
 
   chdir $self->_cwd if $self->_cwd;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;
 
